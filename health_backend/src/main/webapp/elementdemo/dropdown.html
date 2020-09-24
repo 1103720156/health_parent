@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <!-- 引入ElementUI组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 点击触发，点击之后不消失-->
+        <el-dropdown :hide-on-click="false" split-button type="info " trigger="click">
+            射手
+            <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item icon="el-icon-plus">公孙离</el-dropdown-item>
+                <el-dropdown-item icon="el-icon-s-flag">蒙犽</el-dropdown-item>
+                <el-dropdown-item icon="el-icon-s-check">孙尚香</el-dropdown-item>
+                <el-dropdown-item icon="el-icon-menu">伽罗</el-dropdown-item>
+                <el-dropdown-item icon="el-icon-s-open">狄仁杰</el-dropdown-item>
+            </el-dropdown-menu>
+        </el-dropdown>
+
+        <!--按钮式下拉菜单，不需要点击-->
+        <el-dropdown>
+            <el-button size="medium " type="danger">
+                战士<i class="el-icon-arrow-down el-icon--right"></i>
+
+            </el-button>
+            <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item>露娜</el-dropdown-item>
+                <el-dropdown-item>关羽</el-dropdown-item>
+                <el-dropdown-item>马超</el-dropdown-item>
+                <el-dropdown-item>典韦</el-dropdown-item>
+                <el-dropdown-item>吕布</el-dropdown-item>
+            </el-dropdown-menu>
+
+        </el-dropdown>
+        <el-dropdown  split-button size="small " type="success">
+            法师
+            <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item icon="el-icon-plus">貂蝉</el-dropdown-item>
+                <el-dropdown-item icon="el-icon-s-flag">甄姬</el-dropdown-item>
+                <el-dropdown-item icon="el-icon-s-check">干将莫邪</el-dropdown-item>
+                <el-dropdown-item icon="el-icon-menu">不知火舞</el-dropdown-item>
+                <el-dropdown-item icon="el-icon-s-open">嬴政</el-dropdown-item>
+            </el-dropdown-menu>
+        </el-dropdown>
+        <el-dropdown :hide-on-click="false" split-button size="mini" type="primary" trigger="click" @command="handleCommand">
+            刺客
+            <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item icon="el-icon-plus" command="百里玄策">百里玄策</el-dropdown-item>
+                <el-dropdown-item icon="el-icon-s-flag" command="韩信">韩信</el-dropdown-item>
+                <el-dropdown-item icon="el-icon-s-check" command="李白">李白</el-dropdown-item>
+                <el-dropdown-item icon="el-icon-menu" command="云中君">云中君</el-dropdown-item>
+                <el-dropdown-item icon="el-icon-s-open" command="娜可露露">娜可露露</el-dropdown-item>
+            </el-dropdown-menu>
+        </el-dropdown>
+        <demo_01></demo_01>
+    </div>
+</body>
+
+<script>
+    var Main = {
+        methods: {
+            handleCommand(command) {
+                this.$message('点击' + command);
+            }
+        }
+    }
+    var Ctor = Vue.extend(Main)
+    new Vue().$mount('#app')
+
+</script>
+</html>

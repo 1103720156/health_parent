@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itheIma.dao.SetmealDao">
+
+
+<!--    private Integer id;-->
+<!--    private String name;-->
+<!--    private String code;-->
+<!--    private String helpCode;-->
+<!--    private String sex;//套餐适用性别：0不限 1男 2女-->
+<!--    private String age;//套餐适用年龄-->
+<!--    private Float price;//套餐价格-->
+<!--    private String remark;-->
+<!--    private String attention;-->
+<!--    private String img;//套-->
+    <resultMap id="baseResultMap" type="com.itheIma.pojo.Setmeal">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="help_code" property="helpCode" jdbcType="VARCHAR"/>
+        <result column="sex" property="sex" jdbcType="VARCHAR"/>
+        <result column="age" property="age" jdbcType="VARCHAR"/>
+        <result column="price" property="price" jdbcType="FLOAT"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="attention" property="attention" jdbcType="VARCHAR"/>
+        <result column="img" property="img" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="findByIdResultMap" type="com.itheIma.pojo.Setmeal" extends="baseResultMap">
+        <!--多对多映射-->
+        <collection
+                property="checkGroups"
+                ofType="com.itheIma.pojo.CheckGroup"
+                select="com.itheIma.dao.CheckGroupDao.findCheckGroupById"
+                column="id"
+        >
+        </collection>
+    </resultMap>
+
+
+    <!--插入套餐数据-->
+    <insert id="add" parameterType="com.itheIma.pojo.Setmeal">
+        <!--通过mybatis框架提供的selectKey标签获得自增产生的ID值-->
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert into t_setmeal(code,name,sex,helpCode,remark,attention,age,price,img)
+        values
+        (#{code},#{name},#{sex},#{helpCode},#{remark},#{attention},#{age},#{price},#{img})
+    </insert>
+
+    <!--设置套餐和检查组多对多关系-->
+    <insert id="setSetmealAndCheckGroup" parameterType="hashmap" >
+        insert into t_setmeal_checkgroup(setmeal_id,checkgroup_id)
+        values
+        (#{setmeal_id},#{checkgroup_id});
+
+    </insert>
+
+
+    <select id="findAll" resultType="com.itheIma.pojo.Setmeal">
+        select *from t_setmeal
+    </select>
+
+
+    <select id="selectByCondition" parameterType="string" resultType="com.itheIma.pojo.Setmeal">
+        select * from t_setmeal
+        <if test="value != null and value.length > 0">
+         where code = #{value} or name = #{value} or helpCode = #{value}
+         </if>
+    </select>
+
+    <select id="findByID" parameterType="int" resultMap="findByIdResultMap">
+        select * from t_setmeal where id = #{id}
+    </select>
+    <!--根据条件进行查询-->
+    <!--<select id="findByCondition" parameterType="string" resultType="baseResultMap">
+        select
+        `id` ,
+        `name`,
+        `code`,
+        `help_code` as helpCode ,
+        `sex` ,
+        `age` ,
+        `price`,
+        `remark` ,
+        `attention` ,
+        `img`
+         from t_setmeal
+        <if test="value != null and value != '' and value.length > 0">
+            where code = #{value} or name = #{value} or help_code = #{value}
+        </if>
+    </select>-->
+    <select id="findSetmealCount" resultType="map">
+        select s.name,count(o.id) as value from t_order o ,t_setmeal s where o.setmeal_id = s.id group by s.name
+    </select>
+</mapper>
