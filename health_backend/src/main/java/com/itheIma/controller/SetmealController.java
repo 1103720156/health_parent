@@ -8,6 +8,7 @@ import com.itheIma.entity.PageResult;
 import com.itheIma.entity.QueryPageBean;
 import com.itheIma.entity.Result;
 import com.itheIma.pojo.Setmeal;
+import com.itheIma.utils.AliUtils;
 import com.itheIma.utils.QiniuUtils;
 import com.itheIma.service.SetmealService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +56,8 @@ public class SetmealController {
             String suffix = originalFilename.substring(lastIndexOf - 1);
             //使用UUID随机产生文件名称，防止同名文件覆盖
             String fileName = UUID.randomUUID().toString() + suffix;
-            QiniuUtils.upload2Qiniu(imgFile.getBytes(),fileName);
+
+            AliUtils.upload2Ali(imgFile.getBytes(),fileName);
             //图片上传成功
 
             Result result = new Result(true, MessageConstant.PIC_UPLOAD_SUCCESS);
