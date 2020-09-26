@@ -27,9 +27,9 @@ public class AliUtils {
     //阿里云API的外网域名
     private static String ENDPOINT = "oss-cn-beijing.aliyuncs.com";
     //阿里云API的密钥Access Key ID
-    private static String ACCESS_KEY_ID = "LTAI4GHCc4bkipKp6chDxdcx";
+    private static String ACCESS_KEY_ID = "";
     //阿里云API的密钥Access Key Secret
-    private static String ACCESS_KEY_SECRET = "HfXylsd2334veVNQwVzZJBYWhkk47V";
+    private static String ACCESS_KEY_SECRET = "";
     //阿里云API的bucket名称
     private static String BACKET_NAME = "health-bhq";
     //阿里云API的文件夹名称
